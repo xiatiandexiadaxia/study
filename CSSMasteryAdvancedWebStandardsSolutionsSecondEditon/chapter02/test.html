@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#content div#main-content h2 {
+			color: gray;
+		}
+		#content #main-content>h2 {
+			color: blue;
+		}
+		body #content div[id="main-content"] h2 {
+			color: green;
+		}
+		#main-content div.news-story h2 {
+			color: orange;
+		}
+		#main-content [class="news-story"] h2 {
+			color: yellow;
+		}
+		div#main-content div.news-story h2.first {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<div id="main-content">
+			<h2>Strange Times</h2>
+			<p>Here you can read bizarre news stories from around the globe</p>
+			<div class="news-story">
+				<h2 class="first">Bog Snorkeling Champion Announced Today</h2>
+				<p>The 2008 Bog Snorkeling Championship was won by Conor Murphy with an impressive time of 1 minute 38 seconds.</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
