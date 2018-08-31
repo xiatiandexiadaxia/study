@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.news {
+			background-color: gray;
+			border: solid 1px black;
+		}
+		.news img {
+			float: left;
+		}
+		.new p {
+			float: right;
+		}
+		.clear:after {
+			content: ".";
+			height: 0;
+			visibility: hidden;
+			display: block;
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+	<div class="news clear">
+		<img src="img/atol.jpg" alt="my pic">
+		<p>Some text</p>
+	</div>
+</body>
+</html>
