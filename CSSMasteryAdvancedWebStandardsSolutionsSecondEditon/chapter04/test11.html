@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		body {
+			background-image: url(img/bg-rear.gif);
+			background-repeat: repeat-x;
+			background-color: #d3ff99;
+			background-position: 20% 0;
+		}
+
+		.midground {
+			background-image: url(img/bg-mid.png);
+			background-repeat: repeat-x;
+			background-color: transparent;
+			background-position: 40% 0;
+		}
+
+		.foreground{
+			background-image: url(img/bg-front.png);
+			background-repeat: repeat-x;
+			background-color: transparent;
+			background-position: 150% 0;
+		}
+		.content {
+			max-width: 61em; /* 1098px */
+			margin: 0 auto;
+			padding: 100px 20px 0 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="midground">
+		<div class="foreground">
+			<div class="content">
+				<h1>Your content will go here!</h1>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
