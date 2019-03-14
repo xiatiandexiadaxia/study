@@ -1,0 +1,80 @@
+队列特性
+	先进先出
+应用场景
+	异步处理 定时任务 系统解耦
+生产者和消费者的模式
+	生产者生产任务->job,job....->消费者消费任务
+特性
+	优先级（支持任务插队）
+	延迟（可以实现定时任务）
+	持久化（定时写入日志文件）
+	预留（指定条件执行任务）
+	超时重发（消费者需要在一定时间内处理完任务，否则认为超时，循环发送任务）
+核心元素
+	tube（管道，管道里面存任务）
+	job（任务）
+任务状态
+	任务（job）从进入管道（tube）到离开管道，一共有五个状态
+	ready（任务是准备好的，可以被消费者读取）
+	delayed（任务是延迟的，延迟时间结束后变为ready）
+	buried（任务是预留的，条件成熟了变为ready）
+	reserved（任务是正在被消费者读取的）
+	delete（任务是删除的）
+	job进入tube的时候可以是ready或者delayed
+	delayed可以变成ready
+	ready可以变成reserved
+	reserved可以变成delayed，ready，buried，delete
+	buried可以变成ready
+pheanstalk类
+	是php操纵beanstalkd队列的类
+pheanstalk常用方法
+维护类
+	stats()目前的整体情况
+	listTubes()目前已经存在的管道
+	statsTube(管道名)管道的情况
+	useTube(管道名)指定使用管道->put(任务)
+	statsJob(任务)任务的情况
+	peek(任务id)根据任务id获取任务
+生产类
+	putInTube(管道名,任务名,优先级-非必须,延时-秒数-非必须)
+	put(任务名,优先级-非必须,延时-秒数-非必须)
+消费类
+	watch(管道名)设置要监听的管道,可以设置多个管道
+	listTubesWatched()目前已经被监听的管道
+	ignore(管道名)不监听管道
+	reserve(阻塞时间-非必须)以阻塞的方式监听管道,当发现存在ready状态的任务,就获取并返回这个任务
+	reserveFromTube()watch+reserve方法
+	release()回滚任务
+	bury()条件成熟了，再消费任务
+	kickJob(任务)预留任务变成准备好任务
+	kick(数值)预留任务变成准备好任务，批量吧id小于参数的全部变成准备好任务
+	peekBuried(管道名)获取预留任务
+	peekReady(管道名)获取准备好任务
+	peekDelayed(管道名)获取延时任务
+	peek系列不是阻塞式的，会抛出异常
+	pauseTube(管道名，时间-秒)给管道设置延迟
+	resumeTube(管道名)延迟管道变成可立即执行管道
+	touch()任务重新计算超时时间，给任务续命用
+一个使用pheanstalk类操作beanstalkd的小例子
+	生产者常用的方法是useTube和put，使用useTube创建管道，使用put往管道里面放任务
+	消费者常用的方法是watch和reserve，使用watch监听管道，使用reserve取出任务
+		后续可以对取出的任务进行delete和release和bury
+	实例化pheanstalk类
+		require "";					引用文件
+		use Pheanstalk\Pheanstalk;	引用Pheanstalk命名空间
+		$pheanstalk =  new Pheanstalk(IP地址,端口号);	实例化类
+	生产任务
+		$pheanstalk->useTube('newUsers')	指定使用newUsers管道，如果管道不存在则创建
+					->put('newJobs');		放入任务newJobs
+	消费任务
+		while(true)	这里不用担心死循环问题，如果reserve找不到ready状态的任务，就会阻塞程序
+		{
+			$job = $pheanstalk->watch('newUsers')	监听管道newUsers
+								->reserve();		取出ready状态的任务
+
+			echo $job->getData();					getData方法
+
+			//处理具体业务
+
+			$pheanstalk->delete($job);				删除任务，否则超时又放入管道了
+		}

@@ -1,0 +1,27 @@
+伪元素:before和:after可以做的东西是相当惊人的，对于页面上的每一个元素，你拥有了两个更灵活的，而且可以完成其他HTML元素都能完成的东西的元素，而且不会对语义标签产生负面影响
+多重背景画布
+因为伪元素相对于它们的父类元素绝对定位，可以想象成每个元素都有额外的两层（content ：after ：before element按顺序展示这四层），比如多边界，模拟CSS3多重背景，等高栏等。http://nicolasgallagher.com/multiple-backgrounds-and-borders-with-css2/
+增加单个元素能创建的形状数目
+比如创建一个六角星
+打印网页时显示链接的URL
+@media print{
+	a[href]:after{
+		content:"("attr(href)")";
+	}
+}
+清除浮动
+相比插入额外的非语义标记来清除内联元素的浮动，我们可以使用一个伪元素来完成。俗称"clearfix"，并且使用"group"这个类名也更语义化。https://css-tricks.com/snippets/css/clear-fix/
+.group:before, 
+.group:after{ 
+	content:""; 
+	display:table; 
+} 
+.group:after{ 
+	clear:both; 
+} 
+.group{ 
+	zoom:1; /* For IE 6/7 (trigger hasLayout) */ 
+}
+<section id="xxx" class="group">
+模拟float:center;
+float属性并没有center这个值,原理是通过使用占位伪元素在两个容器之间占一块位置,并放上一个图像

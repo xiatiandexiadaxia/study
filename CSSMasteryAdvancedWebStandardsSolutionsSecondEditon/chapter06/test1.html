@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ol.pagination{
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		ol.pagination li{
+			/*display: inline;*/	/*为了让列表项水平排列儿不是垂直排列可以把display属性设置为inline*/
+			float: left;			/*但是，对于比较复杂的水平列表样式，使用浮动列表项，然后使用外边距把它们分开，就会更灵活*/
+			margin-right: 0.6em;
+		}
+		ol.pagination a,
+		ol.pagination li.selected{
+			display: block;
+			padding: 0.2em 0.5em;
+			border: 1px solid #ccc;
+			text-decoration: none;
+		}
+		ol.pagination a:hover,
+		ol.pagination a:focus,
+		ol.pagination li.selected{
+			background-color: blue;
+			color: white;
+		}
+		ol.pagination a[rel="prev"],
+		ol.pagination a[rel="next"]{
+			border: none;
+		}
+		ol.pagination a[rel="prev"]:before{	/*在列表的开头和末尾添加箭头，可以在HTML当中直接编写，也可以使用CSS注入，便于后期修改或删除*/
+			content: "\00AB";
+			padding-right: 0.5em;
+		}
+		ol.pagination a[rel="next"]:after{	/*使用before和after伪类选择器以及content属性*/
+			content: "\00BB";
+			padding-left: 0.5em;		
+		}
+	</style>
+</head>
+<body>
+	<ol class="pagination">
+		<li><a href="" rel="prev">Prev</a></li><!-- <a> 标签的 rel 属性用于指定当前文档与被链接文档的关系。 -->
+		<li><a href="">1</a></li>
+		<li class="selected">2</li>
+		<li><a href="">3</a></li>
+		<li><a href="">4</a></li>
+		<li><a href="">5</a></li>
+		<li><a href="" rel="next">Next</a></li>
+	</ol>
+</body>
+</html>

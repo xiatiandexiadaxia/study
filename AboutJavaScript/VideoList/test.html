@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环播放视频</title>
+    <style>
+        video{
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <video src="伟龙视频1.mp4" poster="" autoplay="true" controls="true" volume="true" class="width-full" id="video">
+        </video>
+    </div>
+</body>
+<script>
+window.onload = function(){
+    var vList = ['伟龙视频1.mp4','伟龙视频2.mp4','伟龙视频3.mp4'];
+    var vLen = vList.length;
+    var curr = 1;
+    var myvideo = document.getElementById("video");  
+    myvideo.onended = function(){
+        myvideo.src = vList[curr];
+        myvideo.load();
+        myvideo.play();
+        curr++;
+        console.log(curr);
+        console.log(vLen);
+        if(curr >= vLen){
+            curr = 0;
+        }
+    };
+};
+</script>
+</html>

@@ -288,8 +288,61 @@ border-image
 	a:link, a:visited, a:hover, a:focus, a:active
 	这个顺序应用链接样式
 创建应用了样式的链接下划线
-	
+	链接下划线初衷是为了许多有视觉障碍很难区分颜色的人, 因此默认链接是有下划线的
+	eg: a:link, a:visited {text-decoration:none;font-weight:bold;}
+		a:hover, a:focus, a:active {text-decoration:underline;font-weight:bold;}链接显示为粗体,没有下划线,鼠标悬停在链接上或激活链接时,重新应用下划线
+	eg: a:link, a:visited {text-decoration:none;border-bottom:1px dotted #000}
+		a:hover, a:focus, a:active {border-bottom-style:solid;}默认取消下划线,替换为点线,鼠标悬停在链接上或激活链接时,应用为实现
+	eg: a:link, a:visited {color:#666;text-decoration:none;background:url(underline1.gif) repeat-x left bottom;}
+		a::hover, aLfocus, a:active {background-imge:url(underline1-hover.gif);}使用图片替换下划线,鼠标悬停时使用动图
 使用属性选择器对外部链接应用样式
+	除了链接到特定的文档之外，还可以使用包含片段标识符号的链接链接到页面的特定部分，方法是再href的末尾加#再加要链接的元素的ID
+	eg：<a href="www.baidu.com#id3"> 单机此链接时会转到相应文档id3元素
+	还可以使用：target伪类为目标元素设置样式
+	eg：.comment:target{
+			background-color: yellow;
+		}
+		<div class="comment" id="comment1">
+			<h2>title</h2>
+			<p>this content</p>
+			<p><a href="#comment2">comment2</a></p>
+		</div>	
+	CSS3提供了属性选择器子字符串匹配功能，这些选择器允许通过对属性值的一部分和指定的文本进行匹配来寻找元素，使用方式[att^=val]
+	eg：	a[href^="http:"]{background:url(gif) no-repeat right top;padding-right:10px} 所有链接外部的a链接添加角标
+	[att$=val],寻找以特定值结尾的属性
+	eg：a[href$=".pdf"] 寻找pdf链接。可以告诉使用者这是一个下载而不是另一个页面
+	使用jquery也可以做类似的事情
 使链接表现得像按钮
+	锚是行内元素，只有单机链接的内容的时候才会激活，如果希望实现更像按钮的效果，有更大的可点击区域，可以将锚的display属性值设置为block，然后修改width，height和其他属性来创建需要的样式和点击区域
+	eg: a{display:block;width:6.6em;line-height1.4;text-align:center;text-decoration:none;border:1px solid #66a300;background-color:#8cca12;color:#fff;} 绿色链接按钮，宽度以em为单位，块级元素会扩展，填满可用的宽度，如果它们父元素的宽度大于链接需要的宽度，会溢出。使用line-height来控制高度，可以使文本居中，如果使用height，就要使用padding来将文本压低，模拟垂直居中的效果
+	如果选用这个方式做按钮，要确保元素是真正的链接，而不是空链接，否则在某些情况下这个按钮会消失
+	链接应该只用于GET请求，不应该用于POST请求
 创建已访问链接样式
+	使用：hover伪类可以创建翻转效果
+	:hover, a:focus {background-color:#fff,border-color}鼠标悬停时设置链接的北京和文本色
+
 创建纯CSS的工具提示
+	绝对定位元素的定位是根据最近的已经定位的祖先元素，如果没有则相对于根元素
+	<a href=""><span></span></a>
+	例子：如果a{position:relative;}定位了 则span{position:absolute}根据a否则根据根节点
+	所谓CSS精灵是说在页面上所有的展示图像使用同一个图片的不同部分，根据需求展示，这种设计确实可能大幅度降低CSS请求网络的流浪，但是并没有什么用
+
+第六章 对列表应用样式和创建导航条
+
+用CSS对列表应用样式
+使用背景图像作为项目符号
+	添加定制的li符号，可以使用list-style-image属性，但是这种方法对项目符号图像的位置控制能力不强，更常用的方法是关闭项目符号，并且将定制的项目符号作为背景添加在列表元素上，然后使用背景图像的定位属性控制自定义li符号的对准方式
+	使用左内边距控制li的缩进
+	去掉默认的项目符号list-style-type:none;
+	添加定制的项目符号非常简单，在列表项左边添加内边距，为符号留出空间，然后将项目符号作为背景图像应用于列表项。
+	li{background:url() no-repeat 0 50%;padding-left:30px;}
+创建垂直导航条和水平导航条
+	不对列表项应用样式，而是对其中包含的锚链接应用样式，由此提供更好的浏览器兼容性
+	为了创建与按钮相似的单击区域，需要将锚链接的display属性设置为block,然后扩展锚链接，让它占据可用空间，在这里由列表的宽度决定，可以显式的设置锚链接的宽度，如果设置父列表的宽度，代码更容易维护。
+	CSS规范不允许混合使用多种单位。
+	last-child伪类，获取最后一个子元素
+纯CSS下拉菜单
+	一种比较简单的思路，为二级栏目创建一个ul，把ul定位到屏幕之外，然后当鼠标悬停在父ul上的时候重新定位
+创建CSS图像映射
+创建远距离翻转
+使用定义列表

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>简化的滑动门标签页式导航</title>
+	<style>
+		ul.nav{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			width: 72em;
+		}
+		ul.nav:after{
+			content: '';
+			display: table;
+			clear: both;
+		}
+		ul.nav li{
+			float: left;
+			background: url(img/tab-right.gif) no-repeat right top;
+		}
+		ul.nav li a{
+			display: block;
+			padding: 0 2em;
+			line-height: 2.5em;
+			background: url(img/tab-left.gif) no-repeat left top;
+			text-decoration: none;
+			color: #FFFFFF;
+			/*float: left;*/
+		}
+		ul.nav a:hover,
+		ul.nav a:focus{
+			color: #333333;
+		}
+	</style>
+</head>
+<body>
+	<ul class="nav">
+		<li><a href="">home</a></li>
+		<li><a href="">about</a></li>
+		<li><a href="">news</a></li>
+	</ul>
+</body>
+</html>

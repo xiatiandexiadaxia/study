@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ul.nav{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			width: 72em;
+			/*overflow: auto;*/	/*仅仅在父元素上添加一个值为auto的overflow属性，就能达到撑起父元素高度的效果，将浮动元素包裹在内。其实这里的overflow值，还可以是除visible之外的任何值，都能达到撑起父元素高度，清除浮动的效果。不过，有的值会有副作用，比如，scroll值会导致滚动条始终可见，hidden值会导致超出边框的值不可见等。*/	/*overflow属性是定义一个元素的内容过大而无法适应块级格式化上下文的时候该做什么，是overflow-x和overflow-y的简写属性，属性值visible默认值。内容不会被修剪，会呈现在元素框之外hidden内容会被修剪，并且其余内容不可见scroll内容会被修剪，浏览器会显示滚动条以便查看其余内容auto由浏览器定夺，如果内容被修剪，就会显示滚动条inherit规定从父元素继承overflow属性的值*/
+			background-color: red;
+		}
+		ul.nav:after{	/*clearfix方式clear*/
+			content: "";
+			display: table;	/*也可以使用block值,区别在于设置为display:table;  没有内容也会自成一行,设置为display:block;没有内容不会自成一行,事实上在大多数情况下设置display:block的效果是一样的*/
+			clear: both;
+		}
+		ul.nav li{
+			float: left;	/*元素浮动时，它不再占据文档流中的任何空间，因此父元素实际上没有任何内容，导致父元素收缩*/
+			padding-right: 10px;
+		}
+		ul.nav a{
+			display: block;	/*display设置为block使a链接表现的像按钮一样，可以设置宽高，但是这里没必要*/
+			padding: 0 3em;
+			line-height: 2.1em;	/*使用行高让链接文本垂直居中*/
+			background: url() repeat-y left top;
+			text-decoration: none;	/*关闭链接下划线*/
+			color: #FFFFFF;
+		}
+		ul.nav li:first-child a{
+			background: none;	/*去除第一个链接不必要的背景图*/
+		}
+		ul.nav a:hover,
+		ul.nav a:focus{	/*悬停点击改变链接文本颜色*/
+			color: #333333;
+		}
+	</style>
+</head>
+<body>
+	<ul class="nav">
+		<li><a href="">home</a></li>  
+		<li><a href="">about</a></li>
+		<li><a href="">news</a></li>
+	</ul>
+	<div></div>
+</body>
+</html>
